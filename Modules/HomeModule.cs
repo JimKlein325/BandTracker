@@ -21,14 +21,44 @@ namespace BandTracker
         Band model = Band.Find(parameters.id);
         return View["band.cshtml", model];
       };
-      // Get["/band"] = _ => {
-      //
-      // }
-      Post["/band/addEntirelyNewVenue"] = _ =>{
+      Post["/band/add/venue"] = _ =>{
         Band band = Band.Find(Request.Form["band-id"]);
-        band.AddVenue(Request.Form["venue-name"]);
+        int selectedVenue = Request.Form["venue-select-name"];
+        string name = Request.Form["venue-name"];
+        if(! String.IsNullOrEmpty(name)){
+          Venue newVenue = new Venue(name);
+          newVenue.Save();
+          band.AddVenue(newVenue);
+        }
+        else if(selectedVenue > 0)
+        {
+          band.AddVenue(Venue.Find(selectedVenue));
+        }
+        // fall through condition does not add a Venue since none was selected and there is no text input
         return View["band.cshtml", band];
       };
+      Get["/venue/{id}"] = parameters => {
+        Venue model = Venue.Find(parameters.id);
+        return View["venue.cshtml", model];
+      };
+      Post["/venue/add/band"] = _ =>{
+        Venue venue = Venue.Find(Request.Form["venue-id"]);
+        int selectedBand = Request.Form["band-select-name"];
+        string name = Request.Form["band-name"];
+        if(! String.IsNullOrEmpty(name))
+        {
+          Band newBand = new Band(name);
+          newBand.Save();
+          venue.AddBand(newBand);
+        }
+        else if(selectedBand > 0)
+        {
+          venue.AddBand(Band.Find(selectedBand));
+        }
+        // fall through condition does not add a Venue since none was selected and there is no text input
+        return View["venue.cshtml", venue];
+      };
+
     }
   }
 }

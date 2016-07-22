@@ -2,19 +2,21 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>Band Tracker - O - Rama</title>
+  <title>@Model.GetName()</title>
   <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css'>
   <link rel='stylesheet' href="/Content/css/styles.css">
 </head>
 <body>
   <div class="page-header">
-    <h1>Band Tracker - O - Rama</h1>
+    <h1>@Model.GetName()</h1>
   </div>
   <div class="container">
-    <h2>Bands</h2>
+    <h2>
+      Bands
+    </h2>
     <table class="table table-striped">
       <tbody>
-      @foreach (var band in Model["bands"])
+      @foreach (var band in Model.GetBands())
       {
         <tr>
           <td>
@@ -24,21 +26,23 @@
       }
       </tbody>
     </table>
-    <h2>
-      Venues
-    </h2>
-    <table class="table table-striped">
-      <tbody>
-      @foreach (var venue in Model["venues"])
-      {
-        <tr>
-          <td>
-            <a href="/venue/@venue.GetId()">@venue.GetName()</a>
-          </td>
-        </tr>
-      }
-      </tbody>
-    </table>
+    <h2>Add A Band</h2>
+    <form class="form-group" action="/venue/add/band" method="post">
+      <input name="venue-id" type="hidden" value="@Model.GetId()">
+      <label for = "band-name">Add an entirely new band</label>
+      <input id = "band-name" name = "band-name" type = "text" value = "">
+      <button type = "submit" class="btn-primary">Add Band</button>
+      <br>
+      <label for="band-select-name">Select a Band from the Bands List:</label>
+       <select name="band-select-name">
+         <option value="0" selected="selected"></option>
+        @foreach(var band in Model.GetAllKnowBands())
+         {
+          <option value="@band.GetId()">@band.GetName()</option>
+         }
+       </select>
+      <button type = "submit" class="btn-primary">Add Band</button>
+    </form>
   </div>
 </body>
 </html>

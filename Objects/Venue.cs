@@ -258,7 +258,10 @@ namespace BandTracker.Objects
       }
       return bands;
     }
-
+    public List<Band> GetAllKnowBands()
+    {
+      return Band.GetAll();
+    }
     public static void DeleteAll()
     {
       SqlConnection conn = DB.Connection();

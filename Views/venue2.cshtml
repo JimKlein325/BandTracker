@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Band Tracker - O - Rama</title>
+  <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css'>
+  <link rel='stylesheet' href="/Content/css/styles.css">
+</head>
+<body>
+  <div class="page-header">
+    <h1>Band Tracker - O - Rama</h1>
+  </div>
+  <div class="container">
+    <h2>Bands</h2>
+    <table class="table table-striped">
+      <tbody>
+      @foreach (var band in Model["bands"])
+      {
+        <tr>
+          <td>
+            <a href="/band/@band.GetId()">@band.GetName()</a>
+          </td>
+        </tr>
+      }
+      </tbody>
+    </table>
+    <h2>
+      Venues
+    </h2>
+    <table class="table table-striped">
+      <tbody>
+      @foreach (var venue in Model["venues"])
+      {
+        <tr>
+          <td>
+            <a href="/venue/@venue.GetId()">@venue.GetName()</a>
+          </td>
+        </tr>
+      }
+      </tbody>
+    </table>
+  </div>
+</body>
+</html>
