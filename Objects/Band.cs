@@ -193,14 +193,12 @@ namespace BandTracker.Objects
       SqlParameter bandIdParameter = new SqlParameter();
       bandIdParameter.ParameterName = "@BandId";
       bandIdParameter.Value = _id;
-      Console.WriteLine("ID within GetVenues:" + _id.ToString());
       cmd.Parameters.Add(bandIdParameter);
 
       rdr = cmd.ExecuteReader();
 
       while(rdr.Read())
       {
-        Console.WriteLine("adding venue");
         string venueName = rdr.GetString(0);
         int venueId = rdr.GetInt32(1);
         Venue newVenue = new Venue(venueName, venueId);
@@ -215,7 +213,6 @@ namespace BandTracker.Objects
       {
         conn.Close();
       }
-      Console.WriteLine("venues in GetVenues: " + venues.Count);
 
       return venues;
 

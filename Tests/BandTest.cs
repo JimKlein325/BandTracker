@@ -106,12 +106,10 @@ namespace BandTracker.Tests
       //Arrange
       Band testBand = new Band("The Cavemen");
       testBand.Save();
-      Console.WriteLine("Band ID: "+testBand.GetId());
       var testVenueName = "Cream City";
 
       //Act
       var addedSuccessfully = testBand.AddVenue(testVenueName);
-      Console.WriteLine("String Test Added: " + addedSuccessfully);
       var result = testBand.GetVenues()[0].GetName();
 
       //Assert
