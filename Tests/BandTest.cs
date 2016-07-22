@@ -7,16 +7,16 @@ using BandTracker.Objects;
 
 namespace BandTracker.Tests
 {
-  public class VenueTest : IDisposable
+  public class BandTest : IDisposable
   {
-    public VenueTest()
+    public BandTest()
     {
       DBConfiguration.ConnectionString = "Data Source=(localdb)\\mssqllocaldb;Initial Catalog=band_tracker_test;Integrated Security=SSPI;";
     }
 
     public void Dispose()
     {
-      Venue.DeleteAll();
+      Band.DeleteAll();
       // Band.DeleteAll();
     }
 
@@ -24,7 +24,7 @@ namespace BandTracker.Tests
     public void Test_DatabaseEmptyAtFirst()
     {
       //Arrange, Act
-      int result = Venue.GetAll().Count;
+      int result = Band.GetAll().Count;
       //Assert
       Assert.Equal(0,result);
     }
@@ -33,22 +33,22 @@ namespace BandTracker.Tests
     public void Test_Equal_ReturnsTrueIfNamesAndIdsAreTheSame()
     {
       //Arrange, Act
-      Venue firstVenue = new Venue("Edgefield");
-      Venue secondVenue = new Venue("Edgefield");
+      Band firstBand = new Band("Edgefield");
+      Band secondBand = new Band("Edgefield");
 
       //Assert
-      Assert.Equal(firstVenue, secondVenue);
+      Assert.Equal(firstBand, secondBand);
     }
     [Fact]
     public void Test_Save_SavesToDatabase()
     {
       //Arrange
-      Venue testVenue = new Venue("Crystal Ballroom");
+      Band testBand = new Band("Grateful Dead");
 
       //Act
-      testVenue.Save();
-      List<Venue> result = Venue.GetAll();
-      List<Venue> testList = new List<Venue>{testVenue};
+      testBand.Save();
+      List<Band> result = Band.GetAll();
+      List<Band> testList = new List<Band>{testBand};
 
       //Assert
       Assert.Equal(testList, result);
@@ -58,30 +58,30 @@ namespace BandTracker.Tests
     public void Test_Save_AssignsIdToObject()
     {
       //Arrange
-      Venue testVenue = new Venue("Crystal Ballroom");
+      Band testBand = new Band("Grateful Dead");
 
       //Act
-      testVenue.Save();
-      Venue savedVenue = Venue.GetAll()[0];
+      testBand.Save();
+      Band savedBand = Band.GetAll()[0];
 
-      int result = savedVenue.GetId();
-      int testId = testVenue.GetId();
+      int result = savedBand.GetId();
+      int testId = testBand.GetId();
 
       //Assert
       Assert.Equal(testId, result);
     }
     [Fact]
-    public void Test_Find_FindsVenueInDatabase()
+    public void Test_Find_FindsBandInDatabase()
     {
       //Arrange
-      Venue testVenue = new Venue("Crystal Ballroom");
-      testVenue.Save();
+      Band testBand = new Band("Grateful Dead");
+      testBand.Save();
 
       //Act
-      Venue foundVenue = Venue.Find(testVenue.GetId());
+      Band foundBand = Band.Find(testBand.GetId());
 
       //Assert
-      Assert.Equal(testVenue, foundVenue);
+      Assert.Equal(testBand, foundBand);
     }
 
   }

@@ -4,28 +4,28 @@ using System;
 
 namespace BandTracker.Objects
 {
-  public class Venue
+  public class Band
   {
     private int _id;
     private string _name;
 
-    public Venue(string name, int Id = 0)
+    public Band(string name, int Id = 0)
     {
       _id = Id;
       _name = name;
     }
 
-    public override bool Equals(System.Object otherVenue)
+    public override bool Equals(System.Object otherBand)
     {
-      if (!(otherVenue is Venue))
+      if (!(otherBand is Band))
       {
         return false;
       }
       else
       {
-        Venue newVenue = (Venue) otherVenue;
-        bool idEquality = (this.GetId() == newVenue.GetId());
-        bool nameEquality = (this.GetName() == newVenue.GetName());
+        Band newBand = (Band) otherBand;
+        bool idEquality = (this.GetId() == newBand.GetId());
+        bool nameEquality = (this.GetName() == newBand.GetName());
         return (idEquality && nameEquality);
       }
     }
@@ -39,22 +39,22 @@ namespace BandTracker.Objects
     {
       return _name;
     }
-    public static List<Venue> GetAll()
+    public static List<Band> GetAll()
     {
-      List<Venue> allVenues = new List<Venue> {};
+      List<Band> allBands = new List<Band> {};
       SqlConnection conn = DB.Connection();
       SqlDataReader rdr = null;
       conn.Open();
 
-      SqlCommand cmd = new SqlCommand("SELECT * FROM venues;", conn);
+      SqlCommand cmd = new SqlCommand("SELECT * FROM bands;", conn);
       rdr = cmd.ExecuteReader();
 
       while(rdr.Read())
       {
         string courseName = rdr.GetString(0);
         int courseId = rdr.GetInt32(1);
-        Venue newVenue = new Venue(courseName, courseId);
-        allVenues.Add(newVenue);
+        Band newBand = new Band(courseName, courseId);
+        allBands.Add(newBand);
       }
 
       if (rdr != null)
@@ -66,7 +66,7 @@ namespace BandTracker.Objects
         conn.Close();
       }
 
-      return allVenues;
+      return allBands;
     }
 
     public void Save()
@@ -75,10 +75,10 @@ namespace BandTracker.Objects
       SqlDataReader rdr;
       conn.Open();
 
-      SqlCommand cmd = new SqlCommand("INSERT INTO venues (name) OUTPUT INSERTED.id VALUES (@VenueName);", conn);
+      SqlCommand cmd = new SqlCommand("INSERT INTO bands (name) OUTPUT INSERTED.id VALUES (@BandName);", conn);
 
       SqlParameter nameParameter = new SqlParameter();
-      nameParameter.ParameterName = "@VenueName";
+      nameParameter.ParameterName = "@BandName";
       nameParameter.Value = this.GetName();
 
       cmd.Parameters.Add(nameParameter);
@@ -98,29 +98,29 @@ namespace BandTracker.Objects
         conn.Close();
       }
     }
-    public static Venue Find(int id)
+    public static Band Find(int id)
     {
       SqlConnection conn = DB.Connection();
       SqlDataReader rdr = null;
       conn.Open();
 
-      SqlCommand cmd = new SqlCommand("SELECT * FROM venues WHERE id = @VenueId;", conn);
+      SqlCommand cmd = new SqlCommand("SELECT * FROM bands WHERE id = @BandId;", conn);
       SqlParameter courseIdParameter = new SqlParameter();
-      courseIdParameter.ParameterName = "@VenueId";
+      courseIdParameter.ParameterName = "@BandId";
       courseIdParameter.Value = id.ToString();
       cmd.Parameters.Add(courseIdParameter);
       rdr = cmd.ExecuteReader();
 
 
-      int foundVenueId = 0;
-      string foundVenueName = null;
+      int foundBandId = 0;
+      string foundBandName = null;
 
       while(rdr.Read())
       {
-        foundVenueName = rdr.GetString(0);
-        foundVenueId = rdr.GetInt32(1);
+        foundBandName = rdr.GetString(0);
+        foundBandId = rdr.GetInt32(1);
       }
-      Venue foundVenue = new Venue(foundVenueName, foundVenueId);
+      Band foundBand = new Band(foundBandName, foundBandId);
 
       if (rdr != null)
       {
@@ -130,13 +130,13 @@ namespace BandTracker.Objects
       {
         conn.Close();
       }
-      return foundVenue;
+      return foundBand;
     }
     public static void DeleteAll()
      {
        SqlConnection conn = DB.Connection();
        conn.Open();
-       SqlCommand cmd = new SqlCommand("DELETE FROM venues;", conn);
+       SqlCommand cmd = new SqlCommand("DELETE FROM bands;", conn);
        cmd.ExecuteNonQuery();
      }
   }
