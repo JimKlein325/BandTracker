@@ -33,8 +33,8 @@ namespace BandTracker.Tests
     public void Test_Equal_ReturnsTrueIfNamesAndIdsAreTheSame()
     {
       //Arrange, Act
-      Band firstBand = new Band("Edgefield");
-      Band secondBand = new Band("Edgefield");
+      Band firstBand = new Band("The Byrds");
+      Band secondBand = new Band("The Byrds");
 
       //Assert
       Assert.Equal(firstBand, secondBand);

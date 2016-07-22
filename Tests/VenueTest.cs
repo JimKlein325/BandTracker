@@ -17,7 +17,7 @@ namespace BandTracker.Tests
     public void Dispose()
     {
       Venue.DeleteAll();
-      // Band.DeleteAll();
+      Band.DeleteAll();
     }
 
     [Fact]
@@ -111,5 +111,40 @@ namespace BandTracker.Tests
        //Assert
        Assert.Equal(newName, venueUpdatedName);
      }
+     [Fact]
+     public void Test_AddBand_ForBandThatPlayedAtThisVenue()
+     {
+       //Arrange
+       Venue firstVenue = new Venue("The Cave");
+       firstVenue.Save();
+       Band testBand = new Band("Grateful Dead");
+       testBand.Save();
+       List<Band> testList = new List<Band> {testBand};
+
+       //Act
+       firstVenue.AddBand(testBand);
+       var result = firstVenue.GetBands();
+
+       //Assert
+       Assert.Equal(testList, result);
+     }
+     [Fact]
+     public void Test_AddBand_StringAsInput_ForBandThatPlayedAtThisVenue()
+     {
+       //Arrange
+       Venue firstVenue = new Venue("The Cave");
+       firstVenue.Save();
+       Console.WriteLine("Venue ID: "+firstVenue.GetId());
+       var testBandName = "Cream";
+
+       //Act
+       var addedSuccessfully = firstVenue.AddBand(testBandName);
+       Console.WriteLine("String Test Added: " + addedSuccessfully);
+       var result = firstVenue.GetBands()[0].GetName();
+
+       //Assert
+       Assert.Equal(testBandName, result);
+     }
+
   }
 }
