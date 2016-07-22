@@ -215,7 +215,10 @@ namespace BandTracker.Objects
       }
 
       return venues;
-
+    }
+    public List<Venue> GetAllKnowVenues()
+    {
+      return Venue.GetAll();
     }
 
     public static void DeleteAll()

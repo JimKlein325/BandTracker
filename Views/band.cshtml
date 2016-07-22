@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>@Model.GetName()</title>
+  <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css'>
+  <link rel='stylesheet' href="/Content/css/styles.css">
+</head>
+<body>
+  <div class="page-header">
+    <h1>@Model.GetName()</h1>
+  </div>
+  <div class="container">
+    <h2>
+      Venues
+    </h2>
+    <table class="table table-striped">
+      <tbody>
+      @foreach (var venue in Model.GetVenues())
+      {
+        <tr>
+          <td>
+            <a href="/venue/@venue.GetId()">@venue.GetName()</a>
+          </td>
+        </tr>
+      }
+      </tbody>
+    </table>
+    <h2>Add A Venue</h2>
+    <form class="form-group" action="/band/addEntirelyNewVenue" method="post">
+      <input name="band-id" type="hidden" value="@Model.GetId()">
+      <label for = "venue-name">Add an entirely new venue</label>
+      <input id = "venue-name" name = "venue-name" type = "text" value = "">
+      <button type = "submit" class="btn-primary">Add Venue</button>
+
+      <br>
+      <label for="venue-select-name">Select a Venue from the Venues List:</label>
+       <select name="venue-select-name">
+         <option value="0"></option>
+        @foreach(var venue in Model.GetAllKnowVenues())
+         {
+          <option value="@venue.GetId()">@venue.GetName()</option>
+         }
+       </select>
+      <button type = "submit" class="btn-primary">Add Venue</button>
+    </form>
+  </div>
+</body>
+</html>
