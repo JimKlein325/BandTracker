@@ -189,8 +189,8 @@ namespace BandTracker.Objects
 
       SqlCommand cmd = new SqlCommand
       (
-      "INSERT INTO bands_venues (band_id, venue_id) OUTPUT INSERTED.id VALUES (@BandId, @VenueId);",
-      conn
+        "INSERT INTO bands_venues (band_id, venue_id) OUTPUT INSERTED.id VALUES (@BandId, @VenueId);",
+        conn
       );
 
       SqlParameter bandIdParameter = new SqlParameter();
@@ -236,13 +236,11 @@ namespace BandTracker.Objects
       SqlParameter venuIdParameter = new SqlParameter();
       venuIdParameter.ParameterName = "@VenueId";
       venuIdParameter.Value = _id;
-      Console.WriteLine("ID within Get Bands:" + _id.ToString());
       cmd.Parameters.Add(venuIdParameter);
       rdr = cmd.ExecuteReader();
 
       while(rdr.Read())
       {
-        Console.WriteLine("adding band");
         string bandName = rdr.GetString(0);
         int bandId = rdr.GetInt32(1);
         Band newBand = new Band(bandName, bandId);
@@ -258,7 +256,6 @@ namespace BandTracker.Objects
       {
         conn.Close();
       }
-      Console.WriteLine("bands in GetBands: " + bands.Count);
       return bands;
     }
 
