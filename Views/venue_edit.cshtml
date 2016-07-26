@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Edit Venue:  @Model.GetName()</title>
+    <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css'>
+    <link rel='stylesheet' href="/Content/css/styles.css">
+  </head>
+  <h2>Edit Venue:  @Model.GetName()</h2>
+  <body>
+    <form class="form-group" action="/venue/edit/@Model.GetId()" method="post">
+      <input type="hidden" name="_method" value="PATCH">
+      <input name="venue-id" type="hidden" value="@Model.GetId()">
+
+      <label for="venue-name">Venue Name</label>
+      <input type="text" name="venue-name" requireds>
+      <button type="submit">Submit</button>
+    </form>
+  </body>
+</html>

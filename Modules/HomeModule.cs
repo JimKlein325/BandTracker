@@ -58,7 +58,26 @@ namespace BandTracker
         // fall through condition does not add a Venue since none was selected and there is no text input
         return View["venue.cshtml", venue];
       };
+      Get["/venue/edit/{id}"] = parameters => {
+        Venue model = Venue.Find(parameters.id);
+        return View["venue_edit.cshtml", model];
+      };
 
+      Patch["venue/edit/{id}"] = parameters => {
+        Venue selectedVenue = Venue.Find(parameters.id);
+        selectedVenue.Update(Request.Form["venue-name"]);
+        return View["venue.cshtml", selectedVenue];
+      };
+      Delete["venue/delete/{id}"] = parameters =>{
+        Venue selectedVenue = Venue.Find(parameters.id);
+        selectedVenue.Delete();
+        List<Band> bands = Band.GetAll();
+        List<Venue> venues = Venue.GetAll();
+        Dictionary<string, object> model = new Dictionary<string, object>();
+        model.Add("bands", bands);
+        model.Add("venues", venues);
+        return View["/index.cshtml", model];
+      };
     }
   }
 }

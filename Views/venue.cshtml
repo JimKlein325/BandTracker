@@ -43,6 +43,14 @@
        </select>
       <button type = "submit" class="btn-primary">Add Band</button>
     </form>
+
+    <a href="/"><h3>Return home</h3></a>
+    <a href="/venue/edit/@Model.GetId()"><h3>Edit venue</h3></a>
+    <form action="/venue/delete/@Model.GetId()" method="post">
+  <input type="hidden" name="_method" value="DELETE">
+  <button type="submit">Delete this venue</button>
+</form>
+
   </div>
 </body>
 </html>
